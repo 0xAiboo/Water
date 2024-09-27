@@ -1,0 +1,133 @@
+{
+  "version": "0.1.0",
+  "name": "crowdfunding",
+  "instructions": [
+    {
+      "name": "createCampaign",
+      "accounts": [
+        {
+          "name": "campaign",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "targetAmount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "donate",
+      "accounts": [
+        {
+          "name": "campaign",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "withdraw",
+      "accounts": [
+        {
+          "name": "campaign",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "creator",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Campaign",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "publicKey"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "targetAmount",
+            "type": "u64"
+          },
+          {
+            "name": "amountCollected",
+            "type": "u64"
+          },
+          {
+            "name": "withdrawn",
+            "type": "bool"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "OnlyCreatorCanWithdraw",
+      "msg": "Only the creator can withdraw funds"
+    },
+    {
+      "code": 6001,
+      "name": "TargetAmountNotReached",
+      "msg": "Cannot withdraw until target amount is reached"
+    },
+    {
+      "code": 6002,
+      "name": "AlreadyWithdrawn",
+      "msg": "Funds have already been withdrawn"
+    }
+  ]
+}
