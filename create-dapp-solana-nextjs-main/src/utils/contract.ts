@@ -65,7 +65,6 @@ export const createCampaign = async (name: string, description: string, targetAm
     [Buffer.from("campaign"), provider.wallet.publicKey.toBuffer()],
     program.programId
   );
-  console.log(program)
   await program.methods.createCampaign(name, description, new anchor.BN(targetAmount))
     .accounts({
       campaign,
